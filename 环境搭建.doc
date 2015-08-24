@@ -42,7 +42,7 @@ gd2版本 >=2.10
 	要配置服务器的ip：/etc/hosts 加入一行
 		115.29.168.183 cvsserver
 
-9、编译源码
+9、编译mitbbs源码
 	编译到ssh的时候可能出现错误，提示缺少gem.h头文件
 	需 yum -y install gmp-devel
 
