@@ -1,0 +1,60 @@
+﻿MITBBS安装
+
+
+1、删除自带的apache、php、mysql，安装依赖软件
+
+yum remove httpd php mysql
+
+yum -y install make zlib epel autoconf automake  curl-devel gcc gcc-c++ zlib-devel openssl openssl-devel pcre-devel gd kernel keyutils patch perl kernel-headers compat* mpfr cpp glibc libgomp libstdc++-devel  zlib-devel libXpm* freetype   libjpeg* libpng* php-common php-gd ncurses* libtool* libxml2 libxml2-devel patch ImageMagick  openssl gmp mhash   mcrypt libmcrypt*
+
+安装依赖时会提示版本冲突，事务检查失败，则删除冲突的库
+如 rpm -e xcb-util.x86_64 –nodeps
+
+2、手动编译安装libiconv、apr、apr-util
+安装前 configure时制定安装目录为 /usr/local/libiconv、/usr/local/apr、/usr/local/apr-util
+
+注意安装apr-util时要制定apr的安装路径—with-apr=/usr/local/apr，所以先安装apr.
+
+3、编译安装apache，缺少依赖则安装依赖包
+安装目录为 /usr/local/apache
+
+4、安装mysql
+安装完后，修改 /etc/my.cnt ，[mysqld]配置项下的socket=/tmp/mysql.sock
+
+5、编译安装libjpeg-9a、gd2
+安装目录分别为 /usr/local/libjpeg-9a、/usr/local/gd2
+gd2版本 >=2.10
+
+6、编译安装php
+./configure 配置时提示libmcrypt缺失，则需要安装这个库
+	wget http://www.atomicorp.com/installers/atomic
+	sh ./atomic
+	yum install php-mcrypt libmcrypt libmctypt-devel
+然后make、make install
+
+安装mbstring：
+	进入php源码目录 php-5.6.34/ext/mbstring 下，执行 phpize、configure脚本
+
+7、安装nginx
+
+8、下载mitbbs源码
+	cvs login，密码是 go2bbs$wk$
+	要配置服务器的ip：/etc/hosts 加入一行
+		115.29.168.183 cvsserver
+
+9、编译源码
+	编译到ssh的时候可能出现错误，提示缺少gem.h头文件
+	需 yum -y install gmp-devel
+
+10、安装源码
+
+
+
+
+
+
+
+
+
+
+
