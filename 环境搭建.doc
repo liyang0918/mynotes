@@ -19,7 +19,10 @@ yum -y install make zlib epel autoconf automake  curl-devel gcc gcc-c++ zlib-dev
 安装目录为 /usr/local/apache
 
 4、安装mysql
-安装完后，修改 /etc/my.cnt ，[mysqld]配置项下的socket=/tmp/mysql.sock
+安装完后，在初始化数据库(scripts/mysql_install_db –user=mysql)之前,
+先修改配置文件 /etc/my.cnt ：
+	[mysqld]配置项下的socket=/tmp/mysql.sock
+	[mysqld]配置项下的datadir=/usr/local/mysql/data
 
 5、编译安装libjpeg-9a、gd2
 安装目录分别为 /usr/local/libjpeg-9a、/usr/local/gd2
@@ -47,6 +50,22 @@ gd2版本 >=2.10
 	需 yum -y install gmp-devel
 
 10、安装源码
+在mitbbs主目录，make install，make install-home
+创建固定大小的文件：
+	`dd if=/dev/zero of=/home/bbs/boards/brdstats bs=4800 count=1`
+		其中bs指定文件的大小，of指定生成的文件名
+
+11、运行配置
+web服务器配置
+若apc未安装，则不拷贝 apc.so ,
+若运行 php-fpm -t 测试时提示 cannot get uid for user “nobody”，则修改php-fpm配置文件：
+	/usr/local/php/etc/php-fpm.conf： user、group均改为 bbs
+
+12、运行MITBBS，启动顺序为
+mysql -> MITBBS -> php-fpm -> nginx
+
+
+
 
 
 
